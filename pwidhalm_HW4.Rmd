@@ -1,0 +1,80 @@
+---
+title: "DDS HW 4"
+author: "pwidhalm"
+date: "October 23, 2016"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+Assignment: write bootstrap code to illustrate the central limit theorem.  
+
+
+```{r}
+## fNDist WILL RETURN BOOTSTRAP SAMPLES USING NORMAL DISTRIBUTION
+fNDist<-function(N, repeatz){
+  
+        smple <- rnorm(N, mean=0, sd=1)
+        smpleSD<-sd(smple)
+        smpleMEAN<-mean(smple)
+
+        bmeans<-numeric(repeatz)
+        
+        for (i in 1:repeatz){
+          bsmple<-sample(smple,length(smple),replace = TRUE)
+          bmeans[i]<-mean(bsmple)
+        }
+  
+  return (c(smpleMEAN,bmeans))
+}
+
+## COLLECT NORMAL DISTRIBUTION
+NormDist<-fNDist(100,1000)
+sampleMEAN<-NormDist[1]
+bootMEAN<-NormDist[-1]
+summary(bootMEAN)
+
+## fEDist WILL RETURN BOOTSTRAP SAMPLES USING EXPONENTIAL  DISTRIBUTION
+fEDist<-function(N, repeatz){
+  
+        Esmple <- rexp(N)
+        EmpleSD<-sd(Esmple)
+        EsmpleMEAN<-mean(Esmple)
+
+        Ebmeans<-numeric(repeatz)
+        
+        for (i in 1:repeatz){
+          Ebsmple<-sample(Esmple,length(Esmple),replace = TRUE)
+          Ebmeans[i]<-mean(Ebsmple)
+        }
+  
+  return (c(EsmpleMEAN,Ebmeans))
+}
+
+## COLLECT EXPONENTIAL DISTRIBUTION
+ExpDist<-fEDist(1000,2000)
+ExpsampleMEAN<-ExpDist[1]
+ExpbootMEAN<-ExpDist[-1]
+summary(ExpbootMEAN)
+
+```
+
+
+#In the histograms below, you can see that the central limit theorem is represented by seeing that the mean of the large number of samples is normally distributed.
+
+```{r pressure, echo=FALSE}
+hist(bootMEAN,main = "bootstrapped normal sample")
+abline(v=sampleMEAN, col="blue")
+abline(v=mean(bootMEAN), col="red")
+
+
+hist(ExpbootMEAN,main = "bootstrapped Exponential sample")
+abline(v=ExpsampleMEAN, col="blue")
+abline(v=mean(ExpbootMEAN), col="red")
+
+
+```
+
