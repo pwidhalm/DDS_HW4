@@ -14,7 +14,15 @@ Assignment: write bootstrap code to illustrate the central limit theorem.
 
 
 ```{r}
+#####################################################################
 ## fNDist WILL RETURN BOOTSTRAP SAMPLES USING NORMAL DISTRIBUTION
+## Arguments: 
+## N - The number of observations
+## repeatz - The number of times to sample the observations
+## Returns:
+## This function returns a vector where the first index is the mean of the observations and the remaining
+##      indicies are the means of the samples chosen.
+#####################################################################
 fNDist<-function(N, repeatz){
   
         smple <- rnorm(N, mean=0, sd=1)
@@ -31,13 +39,23 @@ fNDist<-function(N, repeatz){
   return (c(smpleMEAN,bmeans))
 }
 
-## COLLECT NORMAL DISTRIBUTION
+#####################################################################
+## COLLECT NORMAL DISTRIBUTION OBSERVATIONS AND SAMPLES DATA
+#####################################################################
 NormDist<-fNDist(100,1000)
 sampleMEAN<-NormDist[1]
 bootMEAN<-NormDist[-1]
 summary(bootMEAN)
 
-## fEDist WILL RETURN BOOTSTRAP SAMPLES USING EXPONENTIAL  DISTRIBUTION
+#####################################################################
+## fEDist WILL RETURN BOOTSTRAP SAMPLES USING NORMAL DISTRIBUTION
+## Arguments: 
+## N - The number of observations
+## repeatz - The number of times to sample the observations
+## Returns:
+## This function returns a vector where the first index is the mean of the observations and the remaining
+##      indicies are the means of the samples chosen.
+#####################################################################
 fEDist<-function(N, repeatz){
   
         Esmple <- rexp(N)
@@ -54,7 +72,9 @@ fEDist<-function(N, repeatz){
   return (c(EsmpleMEAN,Ebmeans))
 }
 
-## COLLECT EXPONENTIAL DISTRIBUTION
+#####################################################################
+## COLLECT EXPONENTIAL DISTRIBUTION OBSERVATIONS AND SAMPLES DATA
+#####################################################################
 ExpDist<-fEDist(1000,2000)
 ExpsampleMEAN<-ExpDist[1]
 ExpbootMEAN<-ExpDist[-1]
@@ -63,7 +83,7 @@ summary(ExpbootMEAN)
 ```
 
 
-#In the histograms below, you can see that the central limit theorem is represented by seeing that the mean of the large number of samples is normally distributed.
+#In both of the following histograms, the central limit theorem is represented by seeing that the mean of the large number of samples is normally distributed.  The red and blue lines represent the mean of the observations and the mean of the samples chosen.  They are very close also indicating proof of the central limit theorem.
 
 ```{r pressure, echo=FALSE}
 hist(bootMEAN,main = "bootstrapped normal sample")
